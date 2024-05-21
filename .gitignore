@@ -43,7 +43,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+
 
 # Angular files
 dist/

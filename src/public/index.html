@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+</head>
+<body>
+    <h1>API Documentation</h1>
+    <h2>Endpoints</h2>
+    <ul>
+        <li>
+            <h3>Get All Subscribers</h3>
+            <p>URL: <a href="/subscribers" target="_blank">/subscribers</a></p>
+            <p>Method: GET</p>
+            <p>Description: Fetches all subscribers.</p>
+        </li>
+        <li>
+            <h3>Get Subscriber Names and Channels</h3>
+            <p>URL: <a href="/subscribers/names" target="_blank">/subscribers/names</a></p>
+            <p>Method: GET</p>
+            <p>Description: Fetches all subscribers with only their names and subscribed channels.</p>
+        </li>
+        <li>
+            <h3>Get Subscriber by ID</h3>
+            <form id="getSubscriberByIdForm">
+                <label for="subscriberId">Subscriber ID:</label>
+                <input type="text" id="subscriberId" name="subscriberId" required>
+                <button type="submit">Get Subscriber</button>
+            </form>
+            <p id="subscriberResult"></p>
+        </li>
+    </ul>
+
+    <script>
+        document.getElementById('getSubscriberByIdForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const subscriberId = document.getElementById('subscriberId').value;
+            const response = await fetch(`/subscribers/${subscriberId}`);
+            const result = await response.json();
+            document.getElementById('subscriberResult').textContent = JSON.stringify(result, null, 2);
+        });
+    </script>
+</body>
+</html>
