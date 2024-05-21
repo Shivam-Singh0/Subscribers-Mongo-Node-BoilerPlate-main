@@ -2,10 +2,14 @@ const express = require('express');
 const app = require('./app.js');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const path = require('path')
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
+
+
+
 const DATABASE_URL =  process.env.MONGO_URI;
 const PORT = 3000;
 mongoose.connect(process.env.MONGO_URI);

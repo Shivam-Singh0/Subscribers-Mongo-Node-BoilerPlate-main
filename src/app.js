@@ -3,19 +3,18 @@ const path = require('path')
 const express = require('express');
 const app = express()
 const Subscriber = require('./models/subscribers')
-
+const yaml = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
 
 // Your code goes here
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-// Serve Swagger UI at '/api-docs'
-app.use('/api-docs', express.static(path.join(__dirname, 'node_modules', 'swagger-ui-dist')));
+// Load your OpenAPI specification
+const swaggerDocument = yaml.load(path.join(__dirname, 'subscribers_api.yml'));
 
-// Endpoint to serve your OpenAPI specification
-app.get('/swagger.json', (req, res) => {
-    res.sendFile(path.join(__dirname, 'subscribers_api.yml')); 
-});
+// Serve Swagger UI at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.get('/', (req, res) => {
@@ -34,6 +33,15 @@ app.get('/subscribers', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 })
+
+
+
+// Endpoint to serve your OpenAPI specification
+app.get('/swagger.json', (req, res) => {
+    res.sendFile(path.join(__dirname, 'subscribers_api.yml')); 
+});
+
+
 
 // Get all subscriber names and channels
 app.get('/subscribers/names', async (req, res) => {
