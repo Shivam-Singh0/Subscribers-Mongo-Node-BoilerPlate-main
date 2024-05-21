@@ -9,6 +9,15 @@ const Subscriber = require('./models/subscribers')
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+// Serve Swagger UI at '/api-docs'
+app.use('/api-docs', express.static(path.join(__dirname, 'node_modules', 'swagger-ui-dist')));
+
+// Endpoint to serve your OpenAPI specification
+app.get('/swagger.json', (req, res) => {
+    res.sendFile(path.join(__dirname, 'subscribers_api.yml')); 
+});
+
+
 app.get('/', (req, res) => {
 
     res.sendFile(path.join(__dirname, 'public', 'index.html'))

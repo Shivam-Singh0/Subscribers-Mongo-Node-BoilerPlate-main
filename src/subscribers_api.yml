@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: Subscribers API
+  description: API for managing subscribers
+  version: 1.0.0
+servers:
+  - url: https://subscribers-mongo-node-boilerplate-main-7zi0.onrender.com/
+paths:
+  /subscribers:
+    get:
+      summary: Get all subscribers
+      responses:
+        '200':
+          description: A list of subscribers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscriber'
+  /subscribers/names:
+    get:
+      summary: Get subscribers' names and channels
+      responses:
+        '200':
+          description: A list of subscribers with names and channels
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    subscribedChannel:
+                      type: string
+  /subscribers/{id}:
+    get:
+      summary: Get a subscriber by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single subscriber
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    Subscriber:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        subscribedChannel:
+          type: string
